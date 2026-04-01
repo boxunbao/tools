@@ -1,1 +1,940 @@
-Tools
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>DevBox 工具箱 - 免费在线开发者工具集合</title>
+<meta name="description" content="DevBox 是面向开发者的免费在线工具集合，提供 JSON 格式化、美化、压缩、Unicode 转换等实用工具，无需安装，打开即用。">
+<meta name="keywords" content="在线工具,开发者工具,JSON格式化,JSON美化,JSON压缩,Unicode转换,免费工具,前端工具,DevBox">
+<meta name="author" content="DevBox">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#f5f2eb">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="DevBox 工具箱 - 免费在线开发者工具">
+<meta property="og:description" content="面向开发者的免费在线工具集合，JSON 格式化、Unicode 转换等，无需安装，打开即用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="DevBox">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DevBox 工具箱 - 免费在线开发者工具">
+<meta name="twitter:description" content="面向开发者的免费在线工具集合，JSON 格式化、Unicode 转换等，无需安装，打开即用。">
+
+<link rel="canonical" href="https://devbox.tools/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "DevBox 工具箱",
+  "url": "https://devbox.tools/",
+  "description": "面向开发者的免费在线工具集合，提供 JSON 格式化、Unicode 转换等实用工具。",
+  "inLanguage": "zh-CN",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://devbox.tools/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "DevBox 工具列表",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "WebApplication",
+        "name": "JSON 格式化工具",
+        "description": "在线 JSON 美化、压缩、树形视图、Unicode 与中文互转",
+        "url": "https://devbox.tools/json",
+        "applicationCategory": "DeveloperApplication",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" }
+      }
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --paper: #f5f2eb;
+  --ink: #1a1a18;
+  --red: #d42b2b;
+  --red-light: #fae8e8;
+  --muted: #888880;
+  --rule: #d8d4cc;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* ── custom cursor ── */
+*, a { cursor: crosshair; }
+button { cursor: crosshair; }
+
+/* ── LAYOUT GRID ── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ── NAV ── */
+nav {
+  border-bottom: 2px solid var(--ink);
+  position: sticky;
+  top: 0;
+  background: var(--paper);
+  z-index: 100;
+}
+
+.nav-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: stretch;
+  height: 56px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  padding-right: 32px;
+  border-right: 1px solid var(--rule);
+  text-decoration: none;
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 28px;
+  letter-spacing: 2px;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.nav-logo span {
+  color: var(--red);
+}
+
+.nav-tagline {
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.nav-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-left: 32px;
+  border-left: 1px solid var(--rule);
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--red);
+  animation: blink 2s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ── HERO ── */
+.hero {
+  border-bottom: 2px solid var(--ink);
+  overflow: hidden;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  min-height: 480px;
+}
+
+@media (max-width: 768px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-side { display: none; }
+}
+
+.hero-main {
+  padding: 64px 40px 64px;
+  border-right: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.eyebrow-line {
+  height: 1px;
+  width: 40px;
+  background: var(--red);
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 12vw, 148px);
+  line-height: 0.88;
+  letter-spacing: 2px;
+  color: var(--ink);
+}
+
+h1 .red { color: var(--red); }
+
+.hero-sub {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.hero-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 320px;
+}
+
+.hero-cta {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  text-decoration: none;
+  border: none;
+  transition: background 0.15s, gap 0.2s;
+  width: fit-content;
+}
+
+.btn-primary:hover {
+  background: var(--red);
+  gap: 20px;
+}
+
+.btn-arrow { font-size: 18px; transition: transform 0.2s; }
+.btn-primary:hover .btn-arrow { transform: translateX(4px); }
+
+.hero-side {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-stat-block {
+  flex: 1;
+  padding: 32px 28px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-stat-block:last-child { border-bottom: none; }
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 72px;
+  line-height: 1;
+  letter-spacing: 2px;
+  color: var(--ink);
+}
+
+.stat-num.red { color: var(--red); }
+
+.stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  font-weight: 400;
+}
+
+/* ── INDEX BAR ── */
+.index-bar {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.index-inner {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  gap: 0;
+  overflow: hidden;
+}
+
+.index-label {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-right: 24px;
+  border-right: 1px solid var(--rule);
+  margin-right: 24px;
+  white-space: nowrap;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.index-items {
+  display: flex;
+  gap: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.index-item {
+  font-size: 11px;
+  color: var(--muted);
+  padding: 0 20px;
+  border-right: 1px solid var(--rule);
+  letter-spacing: 0.06em;
+  font-weight: 400;
+}
+
+.index-item.active {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ── TOOLS SECTION ── */
+.tools-section {
+  border-bottom: 2px solid var(--ink);
+}
+
+.tools-header {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (max-width: 640px) {
+  .tools-header { grid-template-columns: 1fr; }
+}
+
+.tools-header-label {
+  padding: 20px 40px 20px;
+  border-right: 1px solid var(--rule);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.tools-header-count {
+  padding: 20px 40px;
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+}
+
+/* ── TOOL ROWS ── */
+.tool-row {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.12s;
+  position: relative;
+}
+
+.tool-row:last-child { border-bottom: none; }
+
+.tool-row.active:hover { background: #eee9e0; }
+
+.tool-row.coming {
+  opacity: 0.38;
+  pointer-events: none;
+}
+
+.tool-num {
+  padding: 28px 40px;
+  border-right: 1px solid var(--rule);
+  font-family: var(--font-display);
+  font-size: 36px;
+  letter-spacing: 2px;
+  color: var(--rule);
+  display: flex;
+  align-items: flex-start;
+  padding-top: 32px;
+}
+
+.tool-row.active .tool-num { color: var(--red); }
+
+.tool-body {
+  padding: 28px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tool-name-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tool-name {
+  font-family: var(--font-display);
+  font-size: 32px;
+  letter-spacing: 2px;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.badge {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border: 1px solid currentColor;
+}
+
+.badge-live { color: var(--red); border-color: var(--red); background: var(--red-light); }
+.badge-soon { color: var(--muted); border-color: var(--rule); }
+
+.tool-desc {
+  font-size: 13px;
+  color: var(--muted);
+  max-width: 500px;
+  line-height: 1.7;
+}
+
+.tool-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.tag::before { content: '#'; color: var(--rule); }
+
+.tool-arrow-col {
+  padding: 28px 40px;
+  display: flex;
+  align-items: center;
+  border-left: 1px solid var(--rule);
+  width: 80px;
+  justify-content: center;
+}
+
+.arrow-circle {
+  width: 40px; height: 40px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--muted);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.tool-row.active:hover .arrow-circle {
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
+  transform: rotate(45deg);
+}
+
+/* ── FEATURES ── */
+.features-section {
+  border-bottom: 2px solid var(--ink);
+}
+
+.features-header {
+  padding: 20px 40px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 640px) {
+  .features-grid { grid-template-columns: 1fr; }
+}
+
+.feature-cell {
+  padding: 40px;
+  border-right: 1px solid var(--rule);
+}
+
+.feature-cell:last-child { border-right: none; }
+
+.feature-num {
+  font-family: var(--font-display);
+  font-size: 56px;
+  color: var(--rule);
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+
+.feature-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 10px;
+  letter-spacing: -0.2px;
+}
+
+.feature-text {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+/* ── COMING BANNER ── */
+.coming-banner {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 32px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 2px solid var(--ink);
+  flex-wrap: wrap;
+}
+
+.coming-text {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 4vw, 40px);
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.coming-text span { color: var(--red); }
+
+.coming-sub {
+  font-size: 12px;
+  color: #888;
+  letter-spacing: 0.06em;
+  margin-top: 6px;
+  font-weight: 300;
+}
+
+.coming-tools {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.coming-tag {
+  font-size: 11px;
+  border: 1px solid #444;
+  color: #888;
+  padding: 5px 14px;
+  letter-spacing: 0.06em;
+  font-weight: 300;
+}
+
+/* ── FOOTER ── */
+footer {
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: center;
+  height: 56px;
+  border-top: none;
+}
+
+.footer-brand {
+  padding: 0 40px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 2px;
+  border-right: 1px solid var(--rule);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--ink);
+}
+
+.footer-brand span { color: var(--red); }
+
+.footer-copy {
+  padding: 0 40px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+.footer-right {
+  padding: 0 40px;
+  font-size: 11px;
+  color: var(--muted);
+  border-left: 1px solid var(--rule);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.anim { opacity: 0; animation: slideIn 0.5s ease forwards; }
+.anim-1 { animation-delay: 0.05s; }
+.anim-2 { animation-delay: 0.15s; }
+.anim-3 { animation-delay: 0.25s; }
+.anim-4 { animation-delay: 0.35s; }
+.anim-5 { animation-delay: 0.45s; }
+
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+  .tool-row { grid-template-columns: 60px 1fr; }
+  .tool-arrow-col { display: none; }
+  .tool-num { padding: 24px 20px; font-size: 24px; }
+  .tool-body { padding: 24px 20px; }
+  .tool-name { font-size: 24px; }
+  footer { grid-template-columns: 1fr; height: auto; padding: 16px 20px; gap: 8px; }
+  .footer-brand { border-right: none; height: auto; padding: 0; }
+  .footer-copy { padding: 0; }
+  .footer-right { border-left: none; height: auto; padding: 0; }
+  .feature-cell { border-right: none; border-bottom: 1px solid var(--rule); }
+  .hero-main { padding: 40px 20px; }
+  .tools-header-label, .tools-header-count { padding: 16px 20px; }
+  .features-header { padding: 16px 20px; }
+  .coming-banner { padding: 24px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav role="banner">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand" aria-label="DevBox 首页">
+        <span class="nav-logo">Dev<span>Box</span></span>
+      </a>
+      <div class="nav-tagline">开发者在线工具集合</div>
+      <div class="nav-meta">
+        <span class="nav-dot" aria-hidden="true"></span>
+        在线
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" role="banner">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-main">
+        <div class="hero-eyebrow anim anim-1">
+          <span class="eyebrow-line" aria-hidden="true"></span>
+          免费 · 无需登录 · 本地运行
+        </div>
+        <h1 class="anim anim-2">
+          DEV<br><span class="red">TOOLS</span><br>BOX
+        </h1>
+        <div class="hero-sub">
+          <p class="hero-desc anim anim-3">把开发者日常用到的小工具都放在这里。不需要注册，不需要付费，打开即用，数据不离开你的浏览器。</p>
+          <div class="hero-cta anim anim-4">
+            <a href="#tools" class="btn-primary" aria-label="浏览所有工具">
+              浏览工具
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <aside class="hero-side" aria-label="站点数据">
+        <div class="hero-stat-block">
+          <div class="stat-num red">01</div>
+          <div class="stat-label">当前工具数量</div>
+        </div>
+        <div class="hero-stat-block">
+          <div class="stat-num">00</div>
+          <div class="stat-label">需要注册账号</div>
+        </div>
+        <div class="hero-stat-block">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">免费永久使用</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</header>
+
+<!-- INDEX BAR -->
+<div class="index-bar" aria-hidden="true">
+  <div class="container">
+    <div class="index-inner">
+      <div class="index-label">工具索引</div>
+      <div class="index-items">
+        <div class="index-item active">JSON 格式化</div>
+        <div class="index-item">Base64 —</div>
+        <div class="index-item">URL 编解码 —</div>
+        <div class="index-item">时间戳 —</div>
+        <div class="index-item">正则测试 —</div>
+        <div class="index-item">颜色转换 —</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLS -->
+<section class="tools-section" id="tools" aria-labelledby="tools-heading">
+  <div class="container">
+    <div class="tools-header">
+      <div class="tools-header-label" id="tools-heading">工具列表</div>
+      <div class="tools-header-count">共 1 个工具已上线 · 更多即将发布</div>
+    </div>
+
+    <!-- JSON -->
+    <a href="json_formatter_tool.html" class="tool-row active anim anim-3" role="article" aria-label="JSON 格式化工具，点击进入">
+      <div class="tool-num" aria-hidden="true">01</div>
+      <div class="tool-body">
+        <div class="tool-name-row">
+          <div class="tool-name">JSON 格式化</div>
+          <span class="badge badge-live">已上线</span>
+        </div>
+        <p class="tool-desc">美化、压缩 JSON 数据；树形层级视图支持任意节点展开收缩；中文与 Unicode 转义序列互转；一键复制任意层级内容。</p>
+        <div class="tool-tags">
+          <span class="tag">格式化</span>
+          <span class="tag">压缩</span>
+          <span class="tag">Unicode</span>
+          <span class="tag">树形视图</span>
+          <span class="tag">JSON</span>
+        </div>
+      </div>
+      <div class="tool-arrow-col" aria-hidden="true">
+        <div class="arrow-circle">↗</div>
+      </div>
+    </a>
+
+    <!-- Base64 -->
+    <div class="tool-row coming anim anim-4" role="article" aria-label="Base64 编解码，即将上线">
+      <div class="tool-num" aria-hidden="true">02</div>
+      <div class="tool-body">
+        <div class="tool-name-row">
+          <div class="tool-name">Base64 编解码</div>
+          <span class="badge badge-soon">即将上线</span>
+        </div>
+        <p class="tool-desc">字符串与文件的 Base64 编码与解码，支持图片预览与文件下载。</p>
+        <div class="tool-tags">
+          <span class="tag">编码</span>
+          <span class="tag">解码</span>
+          <span class="tag">Base64</span>
+        </div>
+      </div>
+      <div class="tool-arrow-col" aria-hidden="true">
+        <div class="arrow-circle">↗</div>
+      </div>
+    </div>
+
+    <!-- URL -->
+    <div class="tool-row coming anim anim-5" role="article" aria-label="URL 编解码，即将上线">
+      <div class="tool-num" aria-hidden="true">03</div>
+      <div class="tool-body">
+        <div class="tool-name-row">
+          <div class="tool-name">URL 编解码</div>
+          <span class="badge badge-soon">即将上线</span>
+        </div>
+        <p class="tool-desc">URL encode / decode，querystring 参数解析与可视化拼接。</p>
+        <div class="tool-tags">
+          <span class="tag">URL</span>
+          <span class="tag">编码</span>
+          <span class="tag">QueryString</span>
+        </div>
+      </div>
+      <div class="tool-arrow-col" aria-hidden="true">
+        <div class="arrow-circle">↗</div>
+      </div>
+    </div>
+
+    <!-- Timestamp -->
+    <div class="tool-row coming" role="article" aria-label="时间戳转换，即将上线">
+      <div class="tool-num" aria-hidden="true">04</div>
+      <div class="tool-body">
+        <div class="tool-name-row">
+          <div class="tool-name">时间戳转换</div>
+          <span class="badge badge-soon">即将上线</span>
+        </div>
+        <p class="tool-desc">Unix 时间戳与日期时间互转，支持多时区实时对比。</p>
+        <div class="tool-tags">
+          <span class="tag">时间</span>
+          <span class="tag">时区</span>
+          <span class="tag">Unix</span>
+        </div>
+      </div>
+      <div class="tool-arrow-col" aria-hidden="true">
+        <div class="arrow-circle">↗</div>
+      </div>
+    </div>
+
+    <!-- Regex -->
+    <div class="tool-row coming" role="article" aria-label="正则测试，即将上线">
+      <div class="tool-num" aria-hidden="true">05</div>
+      <div class="tool-body">
+        <div class="tool-name-row">
+          <div class="tool-name">正则测试</div>
+          <span class="badge badge-soon">即将上线</span>
+        </div>
+        <p class="tool-desc">实时正则表达式测试，高亮匹配区间，捕获组可视化展示。</p>
+        <div class="tool-tags">
+          <span class="tag">RegExp</span>
+          <span class="tag">测试</span>
+          <span class="tag">匹配</span>
+        </div>
+      </div>
+      <div class="tool-arrow-col" aria-hidden="true">
+        <div class="arrow-circle">↗</div>
+      </div>
+    </div>
+
+    <!-- Color -->
+    <div class="tool-row coming" role="article" aria-label="颜色转换，即将上线">
+      <div class="tool-num" aria-hidden="true">06</div>
+      <div class="tool-body">
+        <div class="tool-name-row">
+          <div class="tool-name">颜色转换</div>
+          <span class="badge badge-soon">即将上线</span>
+        </div>
+        <p class="tool-desc">HEX / RGB / HSL / HSV 互转，色板预览与调色板导出。</p>
+        <div class="tool-tags">
+          <span class="tag">HEX</span>
+          <span class="tag">RGB</span>
+          <span class="tag">HSL</span>
+          <span class="tag">颜色</span>
+        </div>
+      </div>
+      <div class="tool-arrow-col" aria-hidden="true">
+        <div class="arrow-circle">↗</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" aria-labelledby="features-heading">
+  <div class="container">
+    <div class="features-header" id="features-heading">为什么选 DevBox</div>
+    <div class="features-grid">
+      <div class="feature-cell">
+        <div class="feature-num" aria-hidden="true">01</div>
+        <div class="feature-title">无需登录注册</div>
+        <p class="feature-text">没有账号系统，没有会员墙，没有任何付费功能。打开网址即可使用全部工具。</p>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-num" aria-hidden="true">02</div>
+        <div class="feature-title">本地处理数据</div>
+        <p class="feature-text">所有工具均在浏览器端运行，敏感数据不会上传到任何服务器，安全可靠。</p>
+      </div>
+      <div class="feature-cell">
+        <div class="feature-num" aria-hidden="true">03</div>
+        <div class="feature-title">持续增加工具</div>
+        <p class="feature-text">更多实用工具陆续上线。每一个工具专注做好一件事，克制而不臃肿。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMING BANNER -->
+<div class="coming-banner" aria-label="即将上线的工具">
+  <div>
+    <div class="coming-text">更多工具<span>即将</span>上线</div>
+    <div class="coming-sub">持续更新中 · 欢迎提需求</div>
+  </div>
+  <div class="coming-tools" aria-hidden="true">
+    <span class="coming-tag">Markdown 预览</span>
+    <span class="coming-tag">JWT 解析</span>
+    <span class="coming-tag">Cron 解析</span>
+    <span class="coming-tag">颜色对比度</span>
+    <span class="coming-tag">图片压缩</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <a href="/" class="footer-brand" aria-label="DevBox 首页">Dev<span>Box</span></a>
+  <p class="footer-copy">免费在线开发者工具集合 · 数据本地处理，安全可靠</p>
+  <div class="footer-right">© 2025 DevBox</div>
+</footer>
+
+</body>
+</html>
