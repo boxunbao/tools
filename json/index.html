@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON 格式化工具</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:monospace;font-size:13px;background:#fff;color:#1a1a1a}
+@media(prefers-color-scheme:dark){body{background:#1e1e1e;color:#e0e0e0}}
+:root{
+  --color-background-primary:#fff;
+  --color-background-secondary:#f5f5f4;
+  --color-background-info:#e6f1fb;
+  --color-background-success:#eaf3de;
+  --color-background-danger:#fcebeb;
+  --color-text-primary:#1a1a1a;
+  --color-text-secondary:#666;
+  --color-text-info:#185fa5;
+  --color-text-success:#3b6d11;
+  --color-text-danger:#a32d2d;
+  --color-border-tertiary:rgba(0,0,0,0.15);
+  --color-border-secondary:rgba(0,0,0,0.3);
+  --border-radius-md:8px;
+  --border-radius-lg:12px;
+  --font-mono:monospace;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --color-background-primary:#1e1e1e;
+    --color-background-secondary:#2a2a2a;
+    --color-background-info:#0c2a47;
+    --color-background-success:#1a2e0a;
+    --color-background-danger:#3a1010;
+    --color-text-primary:#e0e0e0;
+    --color-text-secondary:#999;
+    --color-text-info:#85b7eb;
+    --color-text-success:#97c459;
+    --color-text-danger:#f09595;
+    --color-border-tertiary:rgba(255,255,255,0.12);
+    --color-border-secondary:rgba(255,255,255,0.25);
+  }
+}
+.wrap{padding:1rem;display:flex;flex-direction:column;gap:12px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{padding:6px 14px;font-size:12px;font-weight:500;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;transition:background .15s;font-family:inherit}
+.btn:hover{background:var(--color-background-secondary)}
+.btn.primary{background:var(--color-background-info);color:var(--color-text-info);border-color:transparent}
+.btn.primary:hover{opacity:.85}
+.panel{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.panel{grid-template-columns:1fr}}
+.box{display:flex;flex-direction:column;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.box-head{padding:8px 12px;font-size:11px;font-weight:500;color:var(--color-text-secondary);background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary);display:flex;justify-content:space-between;align-items:center}
+textarea{flex:1;min-height:300px;padding:10px 12px;font-family:var(--font-mono);font-size:12px;border:none;outline:none;resize:vertical;background:var(--color-background-primary);color:var(--color-text-primary)}
+.tree-box{flex:1;min-height:300px;overflow:auto;padding:10px 12px;background:var(--color-background-primary);font-size:12px;color:var(--color-text-primary)}
+.msg{padding:6px 10px;font-size:12px;border-radius:var(--border-radius-md);display:none}
+.msg.ok{background:var(--color-background-success);color:var(--color-text-success);display:block}
+.msg.err{background:var(--color-background-danger);color:var(--color-text-danger);display:block}
+.node{padding-left:16px}
+.toggle{cursor:pointer;user-select:none;color:var(--color-text-secondary)}
+.toggle:hover{color:var(--color-text-primary)}
+.key{color:#7677dd}
+.str{color:#1d9e75}
+.num{color:#ba7517}
+.bool{color:#d85a30}
+.null{color:#888}
+.copy-btn{font-size:10px;padding:2px 7px;border:0.5px solid var(--color-border-secondary);border-radius:4px;background:transparent;color:var(--color-text-secondary);cursor:pointer;margin-left:6px;font-family:inherit}
+.copy-btn:hover{background:var(--color-background-secondary)}
+.tabs{display:flex;gap:4px;border-bottom:0.5px solid var(--color-border-tertiary);padding:0 12px;background:var(--color-background-secondary)}
+.tab{padding:6px 12px;font-size:11px;cursor:pointer;border-bottom:2px solid transparent;color:var(--color-text-secondary)}
+.tab.active{color:var(--color-text-primary);border-color:currentColor;font-weight:500}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="toolbar">
+    <button class="btn primary" onclick="doFormat()">美化格式化</button>
+    <button class="btn" onclick="doCompress()">压缩</button>
+    <button class="btn" onclick="doUniEncode()">中文→Unicode</button>
+    <button class="btn" onclick="doUniDecode()">Unicode→中文</button>
+    <button class="btn" onclick="doCopyInput()">复制输入</button>
+    <button class="btn" onclick="clearAll()">清空</button>
+  </div>
+  <div id="msg" class="msg"></div>
+  <div class="panel">
+    <div class="box">
+      <div class="box-head">输入 JSON</div>
+      <textarea id="inp" placeholder='粘贴 JSON 内容，例如：{"name":"张三","age":18}' spellcheck="false"></textarea>
+    </div>
+    <div class="box">
+      <div class="box-head">
+        <span id="out-label">格式化结果</span>
+        <button class="copy-btn" onclick="doCopyOutput()">复制</button>
+      </div>
+      <div class="tabs">
+        <div class="tab active" id="tab-text" onclick="switchTab('text')">文本</div>
+        <div class="tab" id="tab-tree" onclick="switchTab('tree')">树形视图</div>
+      </div>
+      <textarea id="out" style="display:block" readonly placeholder="结果显示在这里..." spellcheck="false"></textarea>
+      <div id="tree" class="tree-box" style="display:none"></div>
+    </div>
+  </div>
+</div>
+<script>
+let curTab='text';
+function showMsg(t,ok){const m=document.getElementById('msg');m.textContent=t;m.className='msg '+(ok?'ok':'err');}
+function clearMsg(){document.getElementById('msg').className='msg';}
+function getInput(){return document.getElementById('inp').value.trim();}
+function setOutput(t){document.getElementById('out').value=t;clearMsg();}
+function switchTab(t){
+  curTab=t;
+  document.getElementById('tab-text').className='tab'+(t==='text'?' active':'');
+  document.getElementById('tab-tree').className='tab'+(t==='tree'?' active':'');
+  document.getElementById('out').style.display=t==='text'?'block':'none';
+  document.getElementById('tree').style.display=t==='tree'?'block':'none';
+}
+function doFormat(){
+  clearMsg();
+  const s=getInput();if(!s){showMsg('请输入 JSON 内容',false);return;}
+  try{
+    const obj=JSON.parse(s);
+    const pretty=JSON.stringify(obj,null,2);
+    setOutput(pretty);
+    renderTree(document.getElementById('tree'),obj);
+    showMsg('格式化成功',true);
+  }catch(e){showMsg('JSON 解析错误：'+e.message,false);}
+}
+function doCompress(){
+  clearMsg();
+  const s=getInput();if(!s){showMsg('请输入 JSON 内容',false);return;}
+  try{
+    const obj=JSON.parse(s);
+    setOutput(JSON.stringify(obj));
+    showMsg('压缩成功',true);
+  }catch(e){showMsg('JSON 解析错误：'+e.message,false);}
+}
+function doUniEncode(){
+  clearMsg();
+  const s=getInput();if(!s){showMsg('请输入内容',false);return;}
+  try{
+    JSON.parse(s);
+    const enc=s.replace(/[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff\u3000-\u303f\uff00-\uffef\u2e80-\u2eff]/g,c=>{
+      return '\\u'+c.charCodeAt(0).toString(16).padStart(4,'0');
+    });
+    setOutput(enc);
+    showMsg('中文已转换为 Unicode 转义',true);
+  }catch(e){showMsg('请先确保是有效 JSON',false);}
+}
+function doUniDecode(){
+  clearMsg();
+  const s=getInput();if(!s){showMsg('请输入内容',false);return;}
+  const dec=s.replace(/\\u([0-9a-fA-F]{4})/g,(_,h)=>String.fromCharCode(parseInt(h,16)));
+  setOutput(dec);
+  showMsg('Unicode 转义已还原为中文',true);
+}
+function doCopyInput(){navigator.clipboard.writeText(document.getElementById('inp').value).then(()=>showMsg('输入内容已复制',true));}
+function doCopyOutput(){navigator.clipboard.writeText(document.getElementById('out').value).then(()=>showMsg('输出内容已复制',true));}
+function clearAll(){document.getElementById('inp').value='';document.getElementById('out').value='';document.getElementById('tree').innerHTML='';clearMsg();}
+
+function renderTree(container,data){
+  container.innerHTML='';
+  container.appendChild(buildNode(data,'root',true));
+}
+function buildNode(val,key,isRoot){
+  const wrap=document.createElement('div');
+  if(val===null||typeof val!=='object'){
+    const line=document.createElement('div');
+    line.style.whiteSpace='pre';
+    if(!isRoot){
+      const k=document.createElement('span');k.className='key';k.textContent=JSON.stringify(key)+': ';
+      line.appendChild(k);
+    }
+    const v=document.createElement('span');
+    if(val===null){v.className='null';v.textContent='null';}
+    else if(typeof val==='string'){v.className='str';v.textContent=JSON.stringify(val);}
+    else if(typeof val==='boolean'){v.className='bool';v.textContent=String(val);}
+    else{v.className='num';v.textContent=String(val);}
+    line.appendChild(v);
+    return line;
+  }
+  const isArr=Array.isArray(val);
+  const keys=Object.keys(val);
+  const header=document.createElement('div');
+  header.style.display='flex';header.style.alignItems='center';header.style.gap='4px';
+  const toggle=document.createElement('span');toggle.className='toggle';toggle.textContent='▼';
+  if(!isRoot){const k=document.createElement('span');k.className='key';k.textContent=JSON.stringify(key)+': ';header.appendChild(toggle);header.appendChild(k);}
+  else{header.appendChild(toggle);}
+  const bracket=document.createElement('span');bracket.style.color='var(--color-text-secondary)';
+  bracket.textContent=(isArr?'[':'{')+(keys.length?'':(isArr?']':'}'));
+  header.appendChild(bracket);
+  const count=document.createElement('span');count.style.color='var(--color-text-secondary)';count.style.fontSize='11px';
+  count.textContent=' // '+keys.length+(isArr?' items':' keys');
+  header.appendChild(count);
+  const copyBtn=document.createElement('button');copyBtn.className='copy-btn';copyBtn.textContent='复制';
+  copyBtn.onclick=e=>{e.stopPropagation();navigator.clipboard.writeText(JSON.stringify(val,null,2));};
+  header.appendChild(copyBtn);
+  wrap.appendChild(header);
+  const children=document.createElement('div');children.className='node';
+  keys.forEach((k)=>{
+    const child=buildNode(val[k],isArr?Number(k):k,false);
+    children.appendChild(child);
+  });
+  if(keys.length){
+    const close=document.createElement('div');close.style.color='var(--color-text-secondary)';
+    close.textContent=isArr?']':'}';
+    children.appendChild(close);
+  }
+  wrap.appendChild(children);
+  toggle.onclick=()=>{
+    const open=children.style.display!=='none';
+    children.style.display=open?'none':'block';
+    toggle.textContent=open?'▶':'▼';
+    bracket.textContent=open?(isArr?'[...':'{...'):(isArr?'[':'{')+(keys.length?'':(isArr?']':'}'));
+  };
+  return wrap;
+}
+</script>
+</body>
+</html>
