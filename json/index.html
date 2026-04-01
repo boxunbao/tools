@@ -1,9 +1,54 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JSON 格式化工具</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>JSON 格式化工具 - 在线美化、压缩、Unicode 转换</title>
+<meta name="description" content="免费在线 JSON 格式化工具，支持 JSON 美化格式化、压缩、树形层级展开收缩、一键复制，以及中文与 Unicode 互相转换。无需安装，粘贴即用。">
+<meta name="keywords" content="JSON格式化,JSON美化,JSON压缩,JSON在线工具,JSON树形视图,Unicode转中文,中文转Unicode,JSON解析,JSON验证,在线工具">
+<meta name="author" content="JSON Formatter Tool">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1e1e1e" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="JSON 格式化工具 - 在线美化、压缩、Unicode 转换">
+<meta property="og:description" content="免费在线 JSON 格式化工具，支持美化、压缩、树形视图、层级展开收缩、中文与 Unicode 互转，无需安装，粘贴即用。">
+<meta property="og:locale" content="zh_CN">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JSON 格式化工具 - 在线美化、压缩、Unicode 转换">
+<meta name="twitter:description" content="免费在线 JSON 格式化工具，支持美化、压缩、树形视图、层级展开收缩、中文与 Unicode 互转。">
+
+<link rel="canonical" href="">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "JSON 格式化工具",
+  "description": "免费在线 JSON 格式化工具，支持 JSON 美化格式化、压缩、树形层级展开收缩、一键复制，以及中文与 Unicode 互相转换。",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "CNY"
+  },
+  "featureList": [
+    "JSON 美化格式化",
+    "JSON 压缩",
+    "树形层级视图",
+    "节点展开与收缩",
+    "一键复制",
+    "中文转 Unicode",
+    "Unicode 转中文"
+  ],
+  "inLanguage": "zh-CN"
+}
+</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:monospace;font-size:13px;background:#fff;color:#1a1a1a}
@@ -72,6 +117,11 @@ textarea{flex:1;min-height:300px;padding:10px 12px;font-family:var(--font-mono);
 </style>
 </head>
 <body>
+<header style="padding:1rem 1rem 0;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+  <h1 style="font-size:16px;font-weight:500;color:var(--color-text-primary);font-family:sans-serif">JSON 格式化工具</h1>
+  <p style="font-size:12px;color:var(--color-text-secondary);font-family:sans-serif">在线美化 · 压缩 · 树形视图 · Unicode 中文互转</p>
+</header>
+<main>
 <div class="wrap">
   <div class="toolbar">
     <button class="btn primary" onclick="doFormat()">美化格式化</button>
@@ -215,5 +265,10 @@ function buildNode(val,key,isRoot){
   return wrap;
 }
 </script>
+</div>
+</main>
+<footer style="padding:0.75rem 1rem;font-size:11px;color:var(--color-text-secondary);font-family:sans-serif;border-top:0.5px solid var(--color-border-tertiary);margin-top:8px">
+  <p>JSON 格式化工具 · 支持美化、压缩、树形视图、Unicode 与中文互转 · 免费在线使用，无需安装</p>
+</footer>
 </body>
 </html>
