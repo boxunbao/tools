@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JWT 解析器 - DevBox</title>
+<meta name="description" content="免费在线 JWT 解析器，本地解析 JWT Header 和 Payload，展示 exp、iat、nbf 等时间字段。">
+<meta name="keywords" content="JWT解析,JWT解码,Token解析,JSON Web Token,在线开发者工具">
+<link rel="icon" href="/images/favicon.ico"><link rel="canonical" href="https://tools.boxunbao.com/jwt-decoder/">
+<meta property="og:type" content="website"><meta property="og:title" content="JWT 解析器"><meta property="og:description" content="本地解析 JWT Header 和 Payload，不校验签名。"><meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/shared/tool.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JWT 解析器","url":"https://tools.boxunbao.com/jwt-decoder/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script>
+</head>
+<body><div class="page"><nav class="topbar"><a class="brand" href="/"><span class="brand-mark">D</span><span>DevBox 工具箱</span></a><a class="back" href="/">返回首页</a></nav>
+<header class="hero"><h1>JWT 解析器</h1><p>在浏览器本地解析 JWT 的 Header 和 Payload。注意：本工具只解码内容，不验证签名真实性。</p></header>
+<main><div class="toolbar"><button class="btn primary" id="decode">解析 JWT</button><button class="btn" id="copy">复制结果</button><button class="btn" id="clear">清空</button></div><div id="msg" class="msg"></div>
+<section class="grid"><div class="panel"><div class="panel-head">JWT Token</div><div class="panel-body"><textarea id="input" placeholder="粘贴 eyJ... 格式的 JWT"></textarea></div></div><div class="panel"><div class="panel-head">解析结果</div><div class="panel-body"><pre id="output" class="output"></pre></div></div></section></main></div>
+<script>
+const $=id=>document.getElementById(id);function m(t,ok){$('msg').textContent=t;$('msg').className='msg '+(ok?'ok':'err')}
+function b64url(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0)))}
+function fmt(v){return typeof v==='number'?new Date(v*1000).toLocaleString():v}
+$('decode').onclick=()=>{try{const p=$('input').value.trim().split('.');if(p.length<2)throw new Error('JWT 至少应包含 Header 和 Payload');const header=JSON.parse(b64url(p[0]));const payload=JSON.parse(b64url(p[1]));const times={};['iat','nbf','exp'].forEach(k=>{if(k in payload)times[k]=fmt(payload[k])});$('output').textContent=JSON.stringify({header,payload,timeFields:times,signature:p[2]?'存在，未验证':'无'},null,2);m('解析成功，签名未校验',true)}catch(e){m('解析失败：'+e.message,false)}};
+$('copy').onclick=async()=>{await navigator.clipboard.writeText($('output').textContent);m('已复制结果',true)};$('clear').onclick=()=>{$('input').value='';$('output').textContent='';$('msg').className='msg'};
+</script></body></html>

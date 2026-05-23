@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>时间戳转换工具 - DevBox</title>
+<meta name="description" content="免费在线时间戳转换工具，支持秒级、毫秒级时间戳、本地时间、UTC 和 ISO 时间互转。">
+<meta name="keywords" content="时间戳转换,Unix时间戳,毫秒时间戳,ISO时间,UTC时间">
+<link rel="icon" href="/images/favicon.ico"><link rel="canonical" href="https://tools.boxunbao.com/timestamp/">
+<meta property="og:type" content="website"><meta property="og:title" content="时间戳转换工具"><meta property="og:description" content="秒级、毫秒级时间戳和日期时间互转。"><meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/shared/tool.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"时间戳转换工具","url":"https://tools.boxunbao.com/timestamp/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script>
+</head>
+<body><div class="page"><nav class="topbar"><a class="brand" href="/"><span class="brand-mark">D</span><span>DevBox 工具箱</span></a><a class="back" href="/">返回首页</a></nav>
+<header class="hero"><h1>时间戳转换工具</h1><p>查看当前时间戳，把秒级或毫秒级 Unix 时间戳转换为本地时间、UTC 和 ISO 格式。</p></header>
+<main><div class="toolbar"><button class="btn primary" id="now">当前时间</button><button class="btn" id="fromTs">时间戳转日期</button><button class="btn" id="fromDate">日期转时间戳</button><button class="btn" id="copy">复制结果</button></div><div id="msg" class="msg"></div>
+<section class="grid"><div class="panel"><div class="panel-head">输入</div><div class="panel-body stack"><input id="ts" type="text" placeholder="时间戳，例如 1716451200 或 1716451200000"><input id="date" type="datetime-local"></div></div><div class="panel"><div class="panel-head">结果</div><div class="panel-body"><pre id="output" class="output"></pre></div></div></section></main></div>
+<script>
+const $=id=>document.getElementById(id);function m(t,ok){$('msg').textContent=t;$('msg').className='msg '+(ok?'ok':'err')}
+function render(d){$('output').textContent=['秒级时间戳: '+Math.floor(d.getTime()/1000),'毫秒时间戳: '+d.getTime(),'本地时间: '+d.toLocaleString(),'UTC 时间: '+d.toUTCString(),'ISO 时间: '+d.toISOString()].join('\n')}
+$('now').onclick=()=>{const d=new Date();$('date').value=d.toISOString().slice(0,16);$('ts').value=d.getTime();render(d);m('已生成当前时间',true)};
+$('fromTs').onclick=()=>{const raw=$('ts').value.trim();if(!/^-?\d+$/.test(raw)){m('请输入数字时间戳',false);return}let n=Number(raw);if(Math.abs(n)<1e12)n*=1000;const d=new Date(n);if(Number.isNaN(d.getTime()))m('时间戳无效',false);else{render(d);m('转换成功',true)}};
+$('fromDate').onclick=()=>{if(!$('date').value){m('请选择日期时间',false);return}render(new Date($('date').value));m('转换成功',true)};
+$('copy').onclick=async()=>{await navigator.clipboard.writeText($('output').textContent);m('已复制结果',true)};$('now').click();
+</script></body></html>

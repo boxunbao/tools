@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base64 编码解码工具 - DevBox</title>
+<meta name="description" content="免费在线 Base64 编码解码工具，支持文本 Base64、URL Safe Base64 和文件转 Base64，浏览器本地处理。">
+<meta name="keywords" content="Base64编码,Base64解码,URL Safe Base64,文件转Base64,在线开发者工具">
+<link rel="icon" href="/images/favicon.ico">
+<link rel="canonical" href="https://tools.boxunbao.com/base64/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Base64 编码解码工具">
+<meta property="og:description" content="文本和文件 Base64 编码解码，支持 URL Safe Base64。">
+<meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="/shared/tool.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Base64 编码解码工具","url":"https://tools.boxunbao.com/base64/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script>
+</head>
+<body>
+<div class="page">
+  <nav class="topbar"><a class="brand" href="/"><span class="brand-mark">D</span><span>DevBox 工具箱</span></a><a class="back" href="/">返回首页</a></nav>
+  <header class="hero"><h1>Base64 编码解码工具</h1><p>支持文本 Base64 编码、解码、URL Safe Base64 转换，以及文件转 Base64 Data URL。</p></header>
+  <main>
+    <div class="toolbar">
+      <button class="btn primary" id="encodeBtn">编码</button><button class="btn" id="decodeBtn">解码</button><button class="btn" id="urlSafeBtn">转 URL Safe</button><button class="btn" id="urlStdBtn">还原标准 Base64</button><button class="btn" id="copyBtn">复制结果</button><button class="btn" id="clearBtn">清空</button>
+    </div>
+    <div id="msg" class="msg"></div>
+    <section class="grid">
+      <div class="panel"><div class="panel-head">输入</div><div class="panel-body stack"><textarea id="input" placeholder="输入需要编码或解码的文本"></textarea><input id="file" type="file"></div></div>
+      <div class="panel"><div class="panel-head">结果</div><div class="panel-body"><textarea id="output" readonly placeholder="结果显示在这里"></textarea></div></div>
+    </section>
+  </main>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+function msg(t,ok){$('msg').textContent=t;$('msg').className='msg '+(ok?'ok':'err');}
+function utf8ToBase64(s){return btoa(String.fromCharCode(...new TextEncoder().encode(s)));}
+function base64ToUtf8(s){return new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0)));}
+$('encodeBtn').onclick=()=>{try{$('output').value=utf8ToBase64($('input').value);msg('编码成功',true)}catch(e){msg('编码失败：'+e.message,false)}};
+$('decodeBtn').onclick=()=>{try{$('output').value=base64ToUtf8($('input').value.trim().replace(/-/g,'+').replace(/_/g,'/'));msg('解码成功',true)}catch(e){msg('Base64 内容无效',false)}};
+$('urlSafeBtn').onclick=()=>{$('output').value=$('input').value.trim().replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');msg('已转换为 URL Safe Base64',true)};
+$('urlStdBtn').onclick=()=>{let s=$('input').value.trim().replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';$('output').value=s;msg('已还原为标准 Base64',true)};
+$('copyBtn').onclick=async()=>{await navigator.clipboard.writeText($('output').value);msg('已复制结果',true)};
+$('clearBtn').onclick=()=>{$('input').value='';$('output').value='';$('msg').className='msg';$('file').value=''};
+$('file').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$('output').value=r.result;msg('文件已转换为 Base64 Data URL',true)};r.onerror=()=>msg('读取文件失败',false);r.readAsDataURL(f)};
+</script>
+</body>
+</html>
