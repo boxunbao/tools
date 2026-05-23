@@ -96,9 +96,12 @@ body{font-family:monospace;font-size:13px;background:#fff;color:#1a1a1a}
 .panel{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:640px){.panel{grid-template-columns:1fr}}
 .box{display:flex;flex-direction:column;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.box.output-box{min-height:300px;resize:vertical;overflow:auto}
 .box-head{padding:8px 12px;font-size:11px;font-weight:500;color:var(--color-text-secondary);background:var(--color-background-secondary);border-bottom:0.5px solid var(--color-border-tertiary);display:flex;justify-content:space-between;align-items:center}
 textarea{flex:1;min-height:300px;padding:10px 12px;font-family:var(--font-mono);font-size:12px;border:none;outline:none;resize:vertical;background:var(--color-background-primary);color:var(--color-text-primary)}
+.output-box textarea{min-height:240px;resize:none}
 .tree-box{flex:1;min-height:300px;overflow:auto;padding:10px 12px;background:var(--color-background-primary);font-size:12px;color:var(--color-text-primary)}
+.output-box .tree-box{min-height:240px}
 .msg{padding:6px 10px;font-size:12px;border-radius:var(--border-radius-md);display:none}
 .msg.ok{background:var(--color-background-success);color:var(--color-text-success);display:block}
 .msg.err{background:var(--color-background-danger);color:var(--color-text-danger);display:block}
@@ -127,6 +130,8 @@ textarea{flex:1;min-height:300px;padding:10px 12px;font-family:var(--font-mono);
   <div class="toolbar">
     <button class="btn primary" onclick="doFormat()">美化格式化</button>
     <button class="btn" onclick="doCompress()">压缩</button>
+    <button class="btn" onclick="doEscape()">转义</button>
+    <button class="btn" onclick="doUnescape()">反转义</button>
     <button class="btn" onclick="doUniEncode()">中文→Unicode</button>
     <button class="btn" onclick="doUniDecode()">Unicode→中文</button>
     <button class="btn" onclick="doCopyInput()">复制输入</button>
@@ -136,9 +141,9 @@ textarea{flex:1;min-height:300px;padding:10px 12px;font-family:var(--font-mono);
   <div class="panel">
     <div class="box">
       <div class="box-head">输入 JSON</div>
-      <textarea id="inp" placeholder='粘贴 JSON 内容，例如：{"name":"张三","age":18}' spellcheck="false"></textarea>
+      <textarea id="inp" placeholder='粘贴 JSON 内容，例如：{"name":"张三","age":18}；也支持粘贴 "{\"name\":\"张三\"}" 这类 JSON 字符串' spellcheck="false"></textarea>
     </div>
-    <div class="box">
+    <div class="box output-box">
       <div class="box-head">
         <span id="out-label">格式化结果</span>
         <button class="copy-btn" onclick="doCopyOutput()">复制</button>
@@ -158,6 +163,23 @@ function showMsg(t,ok){const m=document.getElementById('msg');m.textContent=t;m.
 function clearMsg(){document.getElementById('msg').className='msg';}
 function getInput(){return document.getElementById('inp').value.trim();}
 function setOutput(t){document.getElementById('out').value=t;clearMsg();}
+function parseJsonLike(s){
+  const first=JSON.parse(s);
+  if(typeof first==='string'){
+    const nested=first.trim();
+    if((nested.startsWith('{')&&nested.endsWith('}'))||(nested.startsWith('[')&&nested.endsWith(']'))){
+      return JSON.parse(nested);
+    }
+  }
+  return first;
+}
+function setFormattedJson(obj,source){
+  const pretty=JSON.stringify(obj,null,2);
+  document.getElementById('inp').value=pretty;
+  setOutput(pretty);
+  renderTree(document.getElementById('tree'),obj);
+  showMsg(source||'格式化成功',true);
+}
 function switchTab(t){
   curTab=t;
   document.getElementById('tab-text').className='tab'+(t==='text'?' active':'');
@@ -169,27 +191,47 @@ function doFormat(){
   clearMsg();
   const s=getInput();if(!s){showMsg('请输入 JSON 内容',false);return;}
   try{
-    const obj=JSON.parse(s);
-    const pretty=JSON.stringify(obj,null,2);
-    setOutput(pretty);
-    renderTree(document.getElementById('tree'),obj);
-    showMsg('格式化成功',true);
+    setFormattedJson(parseJsonLike(s),'格式化成功');
   }catch(e){showMsg('JSON 解析错误：'+e.message,false);}
 }
 function doCompress(){
   clearMsg();
   const s=getInput();if(!s){showMsg('请输入 JSON 内容',false);return;}
   try{
-    const obj=JSON.parse(s);
+    const obj=parseJsonLike(s);
     setOutput(JSON.stringify(obj));
+    renderTree(document.getElementById('tree'),obj);
     showMsg('压缩成功',true);
   }catch(e){showMsg('JSON 解析错误：'+e.message,false);}
+}
+function doEscape(){
+  clearMsg();
+  const s=getInput();if(!s){showMsg('请输入内容',false);return;}
+  setOutput(JSON.stringify(s).slice(1,-1));
+  showMsg('内容已转义为 JSON 字符串片段',true);
+}
+function doUnescape(){
+  clearMsg();
+  const s=getInput();if(!s){showMsg('请输入内容',false);return;}
+  try{
+    const safe=s
+      .replace(/[\u0000-\u001f]/g,c=>JSON.stringify(c).slice(1,-1))
+      .replace(/(^|[^\\])"/g,'$1\\\"');
+    const jsonString='"'+safe+'"';
+    const unescaped=JSON.parse(jsonString);
+    setOutput(unescaped);
+    try{
+      const obj=parseJsonLike(unescaped.trim());
+      renderTree(document.getElementById('tree'),obj);
+    }catch(_){}
+    showMsg('内容已反转义',true);
+  }catch(e){showMsg('反转义失败：请输入有效的 JSON 转义内容',false);}
 }
 function doUniEncode(){
   clearMsg();
   const s=getInput();if(!s){showMsg('请输入内容',false);return;}
   try{
-    JSON.parse(s);
+    parseJsonLike(s);
     const enc=s.replace(/[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff\u3000-\u303f\uff00-\uffef\u2e80-\u2eff]/g,c=>{
       return '\\u'+c.charCodeAt(0).toString(16).padStart(4,'0');
     });
@@ -207,6 +249,15 @@ function doUniDecode(){
 function doCopyInput(){navigator.clipboard.writeText(document.getElementById('inp').value).then(()=>showMsg('输入内容已复制',true));}
 function doCopyOutput(){navigator.clipboard.writeText(document.getElementById('out').value).then(()=>showMsg('输出内容已复制',true));}
 function clearAll(){document.getElementById('inp').value='';document.getElementById('out').value='';document.getElementById('tree').innerHTML='';clearMsg();}
+
+document.getElementById('inp').addEventListener('paste',()=>{
+  setTimeout(()=>{
+    const s=getInput();
+    if(!s)return;
+    try{setFormattedJson(parseJsonLike(s),'已自动美化粘贴的 JSON');}
+    catch(_){clearMsg();}
+  },0);
+});
 
 function renderTree(container,data){
   container.innerHTML='';
