@@ -1,7 +1,19 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>QR Code 生成器 - DevBox</title><meta name="description" content="免费在线二维码生成器，输入文本或链接生成 QR Code，可预览并下载 PNG。"><meta name="keywords" content="二维码生成器,QR Code,在线二维码,文本转二维码">
 <link rel="icon" href="/images/favicon.ico"><link rel="canonical" href="https://tools.boxunbao.com/qrcode/"><meta property="og:type" content="website"><meta property="og:title" content="QR Code 生成器"><meta property="og:description" content="输入文本或链接生成二维码并下载 PNG。"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/shared/tool.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"QR Code 生成器","url":"https://tools.boxunbao.com/qrcode/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script></head>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"QR Code 生成器","url":"https://tools.boxunbao.com/qrcode/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MS8CHGDKM8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-MS8CHGDKM8");
+</script>
+
+<meta name="google-adsense-account" content="ca-pub-9948278885841661">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9948278885841661" crossorigin="anonymous"></script>
+</head>
 <body><div class="page"><nav class="topbar"><a class="brand" href="/"><span class="brand-mark">D</span><span>DevBox 工具箱</span></a><a class="back" href="/">返回首页</a></nav><header class="hero"><h1>QR Code 生成器</h1><p>输入链接或文本生成二维码，支持调整尺寸和纠错等级，结果可下载为 PNG。</p></header>
 <main><div class="toolbar"><label>尺寸 <input id="size" type="number" min="128" max="1024" value="256"></label><button class="btn primary" id="run">生成二维码</button><a class="btn" id="download" download="qrcode.png">下载</a></div><div id="msg" class="msg"></div><section class="grid"><div class="panel"><div class="panel-head">内容</div><div class="panel-body"><textarea id="input" placeholder="输入 URL、文本或其他内容">https://tools.boxunbao.com/</textarea></div></div><div class="panel"><div class="panel-head">二维码</div><div class="panel-body stack"><canvas id="canvas" width="256" height="256" class="preview-img"></canvas><p class="muted">离线生成 Version 2-L 二维码，适合不超过 32 字节的短文本或链接。</p></div></div></section></main></div>
 <script>

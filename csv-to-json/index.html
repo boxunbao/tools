@@ -1,7 +1,19 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CSV 转 JSON 工具 - DevBox</title><meta name="description" content="免费在线 CSV 转 JSON 工具，支持粘贴 CSV、本地解析、表头识别和一键复制 JSON。"><meta name="keywords" content="CSV转JSON,CSV解析,在线开发者工具">
 <link rel="icon" href="/images/favicon.ico"><link rel="canonical" href="https://tools.boxunbao.com/csv-to-json/"><meta property="og:type" content="website"><meta property="og:title" content="CSV 转 JSON 工具"><meta property="og:description" content="本地把 CSV 转换为 JSON 数组。"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/shared/tool.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSV 转 JSON 工具","url":"https://tools.boxunbao.com/csv-to-json/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script></head>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"CSV 转 JSON 工具","url":"https://tools.boxunbao.com/csv-to-json/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MS8CHGDKM8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-MS8CHGDKM8");
+</script>
+
+<meta name="google-adsense-account" content="ca-pub-9948278885841661">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9948278885841661" crossorigin="anonymous"></script>
+</head>
 <body><div class="page"><nav class="topbar"><a class="brand" href="/"><span class="brand-mark">D</span><span>DevBox 工具箱</span></a><a class="back" href="/">返回首页</a></nav><header class="hero"><h1>CSV 转 JSON</h1><p>支持逗号、制表符和分号分隔，处理常见引号转义，转换过程在浏览器本地完成。</p></header>
 <main><div class="toolbar"><select id="delimiter"><option value=",">逗号</option><option value="\t">Tab</option><option value=";">分号</option></select><label class="check"><input id="header" type="checkbox" checked>首行为表头</label><button class="btn primary" id="run">转换</button><button class="btn" id="copy">复制结果</button><button class="btn" id="sample">示例</button></div><div id="msg" class="msg"></div><section class="grid"><div class="panel"><div class="panel-head">CSV 输入</div><div class="panel-body"><textarea id="input" placeholder="name,email&#10;张三,dev@example.com"></textarea></div></div><div class="panel"><div class="panel-head">JSON 输出</div><div class="panel-body"><textarea id="output" readonly></textarea></div></div></section></main></div>
 <script>

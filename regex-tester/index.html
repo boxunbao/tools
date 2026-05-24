@@ -1,7 +1,19 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>正则测试器 - DevBox</title><meta name="description" content="免费在线正则测试器，支持 JavaScript 正则表达式、flags、匹配列表和替换预览。"><meta name="keywords" content="正则测试器,Regex Tester,正则表达式,在线开发者工具">
 <link rel="icon" href="/images/favicon.ico"><link rel="canonical" href="https://tools.boxunbao.com/regex-tester/"><meta property="og:type" content="website"><meta property="og:title" content="正则测试器"><meta property="og:description" content="测试 JavaScript 正则表达式并查看匹配结果。"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/shared/tool.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"正则测试器","url":"https://tools.boxunbao.com/regex-tester/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script></head>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"正则测试器","url":"https://tools.boxunbao.com/regex-tester/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MS8CHGDKM8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-MS8CHGDKM8");
+</script>
+
+<meta name="google-adsense-account" content="ca-pub-9948278885841661">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9948278885841661" crossorigin="anonymous"></script>
+</head>
 <body><div class="page"><nav class="topbar"><a class="brand" href="/"><span class="brand-mark">D</span><span>DevBox 工具箱</span></a><a class="back" href="/">返回首页</a></nav><header class="hero"><h1>正则测试器</h1><p>输入 JavaScript 正则表达式和测试文本，查看匹配位置、捕获组和替换预览。</p></header>
 <main><div class="toolbar"><input id="pattern" class="field" placeholder="正则，例如 \\b\\w+@\\w+\\.com\\b"><input id="flags" class="field" value="g" placeholder="flags，例如 gim"><button class="btn primary" id="run">测试</button></div><div id="msg" class="msg"></div><section class="grid"><div class="panel"><div class="panel-head">测试文本</div><div class="panel-body stack"><textarea id="input" placeholder="输入需要匹配的文本"></textarea><input id="replace" class="field" placeholder="替换为，可选"></div></div><div class="panel"><div class="panel-head">匹配结果</div><div class="panel-body"><pre id="output" class="output"></pre></div></div></section></main></div>
 <script>

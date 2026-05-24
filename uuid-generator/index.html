@@ -1,7 +1,19 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UUID 生成器 - DevBox</title><meta name="description" content="免费在线 UUID 生成器，支持批量生成 UUID v4，可选择大写、去连字符和一键复制。"><meta name="keywords" content="UUID生成器,UUID v4,GUID,在线开发者工具">
 <link rel="icon" href="/images/favicon.ico"><link rel="canonical" href="https://tools.boxunbao.com/uuid-generator/"><meta property="og:type" content="website"><meta property="og:title" content="UUID 生成器"><meta property="og:description" content="批量生成 UUID v4，支持复制。"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/shared/tool.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"UUID 生成器","url":"https://tools.boxunbao.com/uuid-generator/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script></head>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"UUID 生成器","url":"https://tools.boxunbao.com/uuid-generator/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MS8CHGDKM8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-MS8CHGDKM8");
+</script>
+
+<meta name="google-adsense-account" content="ca-pub-9948278885841661">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9948278885841661" crossorigin="anonymous"></script>
+</head>
 <body><div class="page"><nav class="topbar"><a class="brand" href="/"><span class="brand-mark">D</span><span>DevBox 工具箱</span></a><a class="back" href="/">返回首页</a></nav><header class="hero"><h1>UUID 生成器</h1><p>使用浏览器 Crypto API 批量生成 UUID v4，适合测试数据、临时 ID 和配置标识。</p></header>
 <main><div class="toolbar"><button class="btn primary" id="gen">生成</button><button class="btn" id="copy">复制结果</button><button class="btn" id="clear">清空</button></div><div id="msg" class="msg"></div><section class="grid"><div class="panel"><div class="panel-head">选项</div><div class="panel-body stack"><label>数量<input id="count" type="number" min="1" max="200" value="10"></label><label class="check"><input id="upper" type="checkbox">大写</label><label class="check"><input id="plain" type="checkbox">去掉连字符</label></div></div><div class="panel"><div class="panel-head">结果</div><div class="panel-body"><textarea id="output" readonly></textarea></div></div></section></main></div>
 <script>

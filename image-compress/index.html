@@ -1,7 +1,19 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>图片压缩工具 - DevBox</title><meta name="description" content="免费在线图片压缩工具，使用 Canvas 在浏览器本地压缩 JPG、PNG、WebP 图片，可调整质量和最大宽度。"><meta name="keywords" content="图片压缩,在线图片压缩,JPG压缩,WebP压缩,Canvas">
 <link rel="icon" href="/images/favicon.ico"><link rel="canonical" href="https://tools.boxunbao.com/image-compress/"><meta property="og:type" content="website"><meta property="og:title" content="图片压缩工具"><meta property="og:description" content="浏览器本地压缩图片，可下载结果。"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/shared/tool.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"图片压缩工具","url":"https://tools.boxunbao.com/image-compress/","applicationCategory":"DesignApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script></head>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"图片压缩工具","url":"https://tools.boxunbao.com/image-compress/","applicationCategory":"DesignApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MS8CHGDKM8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-MS8CHGDKM8");
+</script>
+
+<meta name="google-adsense-account" content="ca-pub-9948278885841661">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9948278885841661" crossorigin="anonymous"></script>
+</head>
 <body><div class="page"><nav class="topbar"><a class="brand" href="/"><span class="brand-mark">D</span><span>DevBox 工具箱</span></a><a class="back" href="/">返回首页</a></nav><header class="hero"><h1>图片压缩工具</h1><p>选择图片后在浏览器本地压缩，可设置输出格式、质量和最大宽度，不上传原图。</p></header>
 <main><div class="toolbar"><select id="type"><option value="image/webp">WebP</option><option value="image/jpeg">JPEG</option><option value="image/png">PNG</option></select><label>质量 <input id="quality" type="number" min="0.1" max="1" step="0.05" value="0.8"></label><label>最大宽度 <input id="maxw" type="number" value="1600"></label><button class="btn primary" id="run">压缩</button><a class="btn" id="download" download="compressed.webp">下载</a></div><div id="msg" class="msg"></div><section class="grid"><div class="panel"><div class="panel-head">原图</div><div class="panel-body stack"><input id="file" type="file" accept="image/*"><div id="info" class="muted">请选择图片</div><img id="before" class="preview-img" alt=""></div></div><div class="panel"><div class="panel-head">压缩结果</div><div class="panel-body stack"><div id="outInfo" class="muted">结果显示在这里</div><img id="after" class="preview-img" alt=""></div></div></section></main></div>
 <script>

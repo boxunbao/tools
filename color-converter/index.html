@@ -1,7 +1,19 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>颜色转换器 - DevBox</title><meta name="description" content="免费在线颜色转换器，支持 HEX、RGB、HSL 互转和颜色预览。"><meta name="keywords" content="颜色转换,HEX转RGB,RGB转HSL,CSS颜色,在线开发者工具">
 <link rel="icon" href="/images/favicon.ico"><link rel="canonical" href="https://tools.boxunbao.com/color-converter/"><meta property="og:type" content="website"><meta property="og:title" content="颜色转换器"><meta property="og:description" content="HEX、RGB、HSL 互转和颜色预览。"><meta name="twitter:card" content="summary"><link rel="stylesheet" href="/shared/tool.css">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"颜色转换器","url":"https://tools.boxunbao.com/color-converter/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script></head>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"颜色转换器","url":"https://tools.boxunbao.com/color-converter/","applicationCategory":"DeveloperApplication","operatingSystem":"Any","inLanguage":"zh-CN","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"}}</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MS8CHGDKM8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-MS8CHGDKM8");
+</script>
+
+<meta name="google-adsense-account" content="ca-pub-9948278885841661">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9948278885841661" crossorigin="anonymous"></script>
+</head>
 <body><div class="page"><nav class="topbar"><a class="brand" href="/"><span class="brand-mark">D</span><span>DevBox 工具箱</span></a><a class="back" href="/">返回首页</a></nav><header class="hero"><h1>颜色转换器</h1><p>输入 HEX、RGB 或 HSL 颜色值，自动转换为常用 CSS 颜色格式。</p></header>
 <main><div class="toolbar"><input id="input" class="field" value="#3b5fdb"><button class="btn primary" id="run">转换</button><button class="btn" id="copy">复制结果</button></div><div id="msg" class="msg"></div><section class="grid"><div class="panel"><div class="panel-head">预览</div><div class="panel-body stack"><input id="picker" type="color" value="#3b5fdb"><div id="swatch" class="swatch"></div></div></div><div class="panel"><div class="panel-head">结果</div><div class="panel-body"><pre id="output" class="output"></pre></div></div></section></main></div>
 <script>
