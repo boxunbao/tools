@@ -104,15 +104,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0f;
-    --surface: #12121a;
-    --surface2: #1c1c28;
-    --border: #2a2a3e;
-    --accent: #7c6aff;
-    --accent2: #ff6a9b;
-    --accent3: #6affce;
-    --text: #e8e8f0;
-    --text-dim: #7070a0;
+    --bg: #f6f7f4;
+    --surface: #ffffff;
+    --surface2: #f0f4f1;
+    --border: #d9ded8;
+    --accent: #2563eb;
+    --accent2: #0f9f8f;
+    --accent3: #ef7d32;
+    --text: #202124;
+    --text-dim: #62676d;
+    --shadow: 0 18px 48px rgba(35, 48, 67, 0.09);
     --mono: 'Space Mono', monospace;
     --sans: 'Noto Sans SC', sans-serif;
   }
@@ -127,15 +128,14 @@
     overflow-x: hidden;
   }
 
-  /* Grid background */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     background-image:
-      linear-gradient(rgba(124,106,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(124,106,255,0.04) 1px, transparent 1px);
-    background-size: 40px 40px;
+      linear-gradient(rgba(37,99,235,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15,159,143,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
     pointer-events: none;
     z-index: 0;
   }
@@ -145,12 +145,12 @@
     z-index: 1;
     max-width: 860px;
     margin: 0 auto;
-    padding: 60px 24px 80px;
+    padding: 42px 24px 72px;
   }
 
   /* Header */
   header {
-    margin-bottom: 56px;
+    margin-bottom: 30px;
   }
 
   .tag {
@@ -160,21 +160,23 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent3);
-    border: 1px solid rgba(106,255,206,0.3);
+    background: #fff7ed;
+    border: 1px solid rgba(239,125,50,0.32);
+    border-radius: 999px;
     padding: 4px 12px;
     margin-bottom: 20px;
   }
 
   h1 {
     font-family: var(--mono);
-    font-size: clamp(28px, 6vw, 52px);
+    font-size: 48px;
     font-weight: 700;
     line-height: 1;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
   }
 
   h1 span.arrow {
-    color: var(--accent2);
+    color: var(--accent3);
     margin: 0 8px;
   }
 
@@ -184,9 +186,10 @@
 
   .subtitle {
     margin-top: 14px;
+    max-width: 720px;
     font-size: 14px;
     color: var(--text-dim);
-    font-weight: 300;
+    font-weight: 400;
     letter-spacing: 0.02em;
   }
 
@@ -194,20 +197,21 @@
   .drop-zone {
     border: 2px dashed var(--border);
     background: var(--surface);
-    border-radius: 2px;
-    padding: 60px 32px;
+    border-radius: 10px;
+    padding: 48px 32px;
     text-align: center;
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: var(--shadow);
   }
 
   .drop-zone::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, rgba(124,106,255,0.08) 0%, transparent 70%);
+    background: linear-gradient(135deg, rgba(37,99,235,0.07), rgba(15,159,143,0.08));
     opacity: 0;
     transition: opacity 0.3s;
     pointer-events: none;
@@ -215,7 +219,7 @@
 
   .drop-zone:hover, .drop-zone.drag-over {
     border-color: var(--accent);
-    background: var(--surface2);
+    background: #f8fbff;
   }
 
   .drop-zone:hover::after, .drop-zone.drag-over::after {
@@ -263,7 +267,8 @@
     background: var(--surface);
     border: 1px solid var(--border);
     padding: 24px;
-    border-radius: 2px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
   }
 
   .preview-section.visible { display: block; }
@@ -280,8 +285,9 @@
   .preview-img-wrap {
     width: 80px;
     height: 80px;
-    background: repeating-conic-gradient(#ffffff18 0% 25%, #00000018 0% 50%) 0 0 / 10px 10px;
+    background: repeating-conic-gradient(#e5e7eb 0% 25%, #ffffff 0% 50%) 0 0 / 10px 10px;
     border: 1px solid var(--border);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -320,6 +326,7 @@
     border: 1px solid var(--border);
     color: var(--text-dim);
     padding: 6px 14px;
+    border-radius: 8px;
     cursor: pointer;
     letter-spacing: 0.05em;
     transition: all 0.15s;
@@ -327,8 +334,9 @@
   }
 
   .btn-change:hover {
-    border-color: var(--accent2);
-    color: var(--accent2);
+    background: #eef6ff;
+    border-color: var(--accent);
+    color: var(--accent);
   }
 
   /* Sizes Grid */
@@ -356,7 +364,7 @@
     padding: 14px 8px;
     background: var(--surface2);
     border: 1px solid var(--border);
-    border-radius: 2px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.15s;
     user-select: none;
@@ -371,11 +379,13 @@
     height: 100%;
     cursor: pointer;
     margin: 0;
+    z-index: 2;
   }
 
   .size-chip.checked {
     border-color: var(--accent);
-    background: rgba(124,106,255,0.12);
+    background: #eef6ff;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.08);
   }
 
   .size-chip.checked .size-num {
@@ -436,12 +446,13 @@
     border: 1px solid var(--border);
     color: var(--text-dim);
     padding: 7px 14px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.15s;
   }
 
-  .btn-select-all:hover { border-color: var(--accent3); color: var(--accent3); }
-  .btn-deselect-all:hover { border-color: var(--accent2); color: var(--accent2); }
+  .btn-select-all:hover { background: #eef6ff; border-color: var(--accent); color: var(--accent); }
+  .btn-deselect-all:hover { background: #fff7ed; border-color: var(--accent3); color: var(--accent3); }
 
   /* Options */
   .options-row {
@@ -455,6 +466,11 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    min-width: 170px;
+  }
+
+  .option-wide {
+    flex: 1 1 280px;
   }
 
   .option-group label {
@@ -479,14 +495,45 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237070a0'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 10px center;
+    border-radius: 8px;
   }
 
   .option-group select:focus { border-color: var(--accent); }
+
+  .range-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .range-row input[type="range"] {
+    width: min(230px, 48vw);
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .range-value {
+    min-width: 44px;
+    padding: 7px 8px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .option-help {
+    color: var(--text-dim);
+    font-size: 12px;
+  }
 
   /* Mode toggle */
   .mode-toggle {
     display: flex;
     border: 1px solid var(--border);
+    border-radius: 8px;
     overflow: hidden;
   }
 
@@ -504,7 +551,7 @@
   }
 
   .mode-btn:last-child { border-right: none; }
-  .mode-btn.active { background: rgba(124,106,255,0.2); color: var(--accent); }
+  .mode-btn.active { background: #eef6ff; color: var(--accent); }
 
   /* Convert Button */
   .btn-convert {
@@ -515,19 +562,20 @@
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    background: linear-gradient(135deg, var(--accent), #9c6aff);
+    background: linear-gradient(135deg, var(--accent), #0f9f8f);
     color: #fff;
     border: none;
+    border-radius: 10px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     transition: transform 0.15s, box-shadow 0.15s;
-    box-shadow: 0 0 40px rgba(124,106,255,0.3);
+    box-shadow: 0 10px 24px rgba(37,99,235,0.22);
   }
 
   .btn-convert:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 50px rgba(124,106,255,0.5);
+    box-shadow: 0 14px 28px rgba(37,99,235,0.28);
   }
 
   .btn-convert:active { transform: translateY(0); }
@@ -564,6 +612,7 @@
   .progress-bar-track {
     height: 3px;
     background: var(--border);
+    border-radius: 999px;
     overflow: hidden;
     margin-bottom: 8px;
   }
@@ -604,14 +653,16 @@
     flex-direction: column;
     align-items: center;
     gap: 12px;
+    border-radius: 8px;
     transition: border-color 0.15s;
   }
 
   .result-card:hover { border-color: var(--accent3); }
 
   .result-preview {
-    background: repeating-conic-gradient(#ffffff18 0% 25%, #00000018 0% 50%) 0 0 / 8px 8px;
+    background: repeating-conic-gradient(#e5e7eb 0% 25%, #ffffff 0% 50%) 0 0 / 8px 8px;
     border: 1px solid var(--border);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -633,12 +684,13 @@
     border: 1px solid var(--accent3);
     color: var(--accent3);
     padding: 7px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.15s;
   }
 
   .btn-download:hover {
-    background: rgba(106,255,206,0.1);
+    background: #fff7ed;
   }
 
   .btn-download-all {
@@ -653,11 +705,12 @@
     color: var(--accent2);
     cursor: pointer;
     transition: all 0.15s;
+    border-radius: 10px;
   }
 
   .btn-download-all:hover {
-    background: rgba(255,106,155,0.1);
-    box-shadow: 0 0 30px rgba(255,106,155,0.2);
+    background: #eefbf8;
+    box-shadow: 0 8px 24px rgba(15,159,143,0.15);
   }
 
   /* Status message */
@@ -667,10 +720,11 @@
     font-family: var(--mono);
     font-size: 12px;
     display: none;
+    border-radius: 8px;
   }
 
-  .status-msg.error { display: block; background: rgba(255,80,80,0.1); border: 1px solid rgba(255,80,80,0.4); color: #ff8080; }
-  .status-msg.success { display: block; background: rgba(106,255,206,0.08); border: 1px solid rgba(106,255,206,0.3); color: var(--accent3); }
+  .status-msg.error { display: block; background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+  .status-msg.success { display: block; background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; }
 
   /* Hidden canvases */
   #canvases { display: none; }
@@ -689,11 +743,11 @@
 
   .seo-h2 {
     font-family: var(--mono);
-    font-size: clamp(16px, 3vw, 22px);
+    font-size: 22px;
     font-weight: 700;
     color: var(--text);
     margin-bottom: 28px;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
 
   /* Features */
@@ -707,7 +761,7 @@
     background: var(--surface);
     border: 1px solid var(--border);
     padding: 20px;
-    border-radius: 2px;
+    border-radius: 8px;
     transition: border-color 0.15s;
   }
 
@@ -722,7 +776,7 @@
     font-family: var(--mono);
     font-size: 13px;
     font-weight: 700;
-    color: var(--accent3);
+    color: var(--accent);
     margin-bottom: 8px;
     letter-spacing: 0.02em;
   }
@@ -754,6 +808,7 @@
     padding: 16px 20px;
     background: var(--surface);
     border: 1px solid var(--border);
+    border-radius: 8px;
   }
 
   .how-to-list li::before {
@@ -762,8 +817,9 @@
     font-size: 11px;
     font-weight: 700;
     color: var(--accent);
-    background: rgba(124,106,255,0.12);
-    border: 1px solid rgba(124,106,255,0.3);
+    background: #eef6ff;
+    border: 1px solid rgba(37,99,235,0.2);
+    border-radius: 6px;
     min-width: 24px;
     height: 24px;
     display: flex;
@@ -788,6 +844,7 @@
   .faq-item {
     background: var(--surface);
     border: 1px solid var(--border);
+    border-radius: 8px;
     transition: border-color 0.15s;
   }
 
@@ -830,6 +887,20 @@
     padding: 0 20px 18px;
     font-weight: 300;
   }
+
+  @media (max-width: 700px) {
+    .container { padding: 28px 16px 56px; }
+    h1 { font-size: 36px; }
+    .drop-zone { padding: 36px 18px; }
+    .preview-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+    .btn-change { width: 100%; }
+    .sizes-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .option-group { width: 100%; }
+    .range-row input[type="range"] { flex: 1; width: auto; }
+  }
 </style>
 
 <!-- Google tag (gtag.js) -->
@@ -855,15 +926,15 @@
 
   <!-- Drop Zone -->
   <div class="drop-zone" id="drop-zone">
-    <div class="drop-icon">
-      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="8" y="12" width="40" height="44" rx="2" stroke="#2a2a3e" stroke-width="2"/>
-        <rect x="14" y="12" width="40" height="44" rx="2" stroke="#3a3a5e" stroke-width="2"/>
-        <rect x="20" y="12" width="40" height="44" rx="2" stroke="#7c6aff" stroke-width="2" fill="rgba(124,106,255,0.05)"/>
-        <path d="M40 8L60 8L60 28" stroke="#ff6a9b" stroke-width="2" stroke-linecap="round"/>
-        <path d="M40 8L60 28" stroke="#ff6a9b" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="32" cy="36" r="6" stroke="#6affce" stroke-width="1.5"/>
-        <path d="M32 30V26M32 26L29 29M32 26L35 29" stroke="#6affce" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <div class="drop-icon">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="12" width="40" height="44" rx="4" stroke="#d9ded8" stroke-width="2"/>
+        <rect x="14" y="12" width="40" height="44" rx="4" stroke="#9ca3af" stroke-width="2"/>
+        <rect x="20" y="12" width="40" height="44" rx="4" stroke="#2563eb" stroke-width="2" fill="rgba(37,99,235,0.06)"/>
+        <path d="M40 8L60 8L60 28" stroke="#ef7d32" stroke-width="2" stroke-linecap="round"/>
+        <path d="M40 8L60 28" stroke="#ef7d32" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="32" cy="36" r="6" stroke="#0f9f8f" stroke-width="1.5"/>
+        <path d="M32 30V26M32 26L29 29M32 26L35 29" stroke="#0f9f8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
     <p class="drop-text-main">拖放 PNG 文件到此处</p>
@@ -917,6 +988,14 @@
           <option value="white">白色</option>
           <option value="black">黑色</option>
         </select>
+      </div>
+      <div class="option-group option-wide">
+        <label for="corner-radius">四角圆弧</label>
+        <div class="range-row">
+          <input id="corner-radius" type="range" min="0" max="50" step="1" value="0">
+          <output class="range-value" id="corner-radius-value" for="corner-radius">0%</output>
+        </div>
+        <div class="option-help">0% 为直角，50% 为圆形</div>
       </div>
     </div>
 
@@ -1050,6 +1129,8 @@ const btnDownloadAll = document.getElementById('btn-download-all');
 const statusMsg = document.getElementById('status-msg');
 const qualitySelect = document.getElementById('quality-select');
 const bgSelect = document.getElementById('bg-select');
+const cornerRadius = document.getElementById('corner-radius');
+const cornerRadiusValue = document.getElementById('corner-radius-value');
 const modeSingle = document.getElementById('mode-single');
 const modeMulti = document.getElementById('mode-multi');
 
@@ -1059,11 +1140,11 @@ SIZES.forEach(({ size, label }) => {
   chip.className = 'size-chip checked';
   chip.dataset.size = size;
   chip.innerHTML = `
-    <input type="checkbox" checked>
+    <input type="checkbox" checked aria-label="选择 ${size}×${size} 尺寸">
     <svg class="size-thumb" width="${Math.min(size, 36)}" height="${Math.min(size, 36)}" viewBox="0 0 ${size} ${size}">
-      <rect width="${size}" height="${size}" rx="2" fill="rgba(124,106,255,0.15)" stroke="rgba(124,106,255,0.4)" stroke-width="1"/>
-      <line x1="${size*0.25}" y1="${size*0.5}" x2="${size*0.75}" y2="${size*0.5}" stroke="rgba(124,106,255,0.7)" stroke-width="${Math.max(1, size/16)}"/>
-      <line x1="${size*0.5}" y1="${size*0.25}" x2="${size*0.5}" y2="${size*0.75}" stroke="rgba(124,106,255,0.7)" stroke-width="${Math.max(1, size/16)}"/>
+      <rect width="${size}" height="${size}" rx="${Math.max(2, size/10)}" fill="rgba(37,99,235,0.12)" stroke="rgba(37,99,235,0.45)" stroke-width="1"/>
+      <line x1="${size*0.25}" y1="${size*0.5}" x2="${size*0.75}" y2="${size*0.5}" stroke="rgba(37,99,235,0.72)" stroke-width="${Math.max(1, size/16)}"/>
+      <line x1="${size*0.5}" y1="${size*0.25}" x2="${size*0.5}" y2="${size*0.75}" stroke="rgba(37,99,235,0.72)" stroke-width="${Math.max(1, size/16)}"/>
     </svg>
     <span class="size-num">${size}px</span>
     <span class="size-label">${label}</span>
@@ -1071,13 +1152,13 @@ SIZES.forEach(({ size, label }) => {
       <svg viewBox="0 0 8 6" fill="none"><path d="M1 3l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
   `;
-  chip.addEventListener('click', () => toggleChip(chip));
+  const checkbox = chip.querySelector('input');
+  checkbox.addEventListener('change', () => updateChipState(chip));
   sizesGrid.appendChild(chip);
 });
 
-function toggleChip(chip) {
+function updateChipState(chip) {
   const cb = chip.querySelector('input');
-  cb.checked = !cb.checked;
   chip.classList.toggle('checked', cb.checked);
 }
 
@@ -1093,6 +1174,10 @@ btnDeselect.addEventListener('click', () => {
     c.querySelector('input').checked = false;
     c.classList.remove('checked');
   });
+});
+
+cornerRadius.addEventListener('input', () => {
+  cornerRadiusValue.textContent = `${cornerRadius.value}%`;
 });
 
 // Mode toggle
@@ -1214,13 +1299,36 @@ function drawToCanvas(img, size) {
   const ctx = canvas.getContext('2d');
 
   const bg = bgSelect.value;
+  const radius = Math.round(size * Math.min(50, Math.max(0, Number(cornerRadius.value))) / 100);
+
+  ctx.clearRect(0, 0, size, size);
+  ctx.save();
+  roundedRectPath(ctx, 0, 0, size, size, radius);
+  ctx.clip();
+
   if (bg === 'white') { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, size, size); }
   else if (bg === 'black') { ctx.fillStyle = '#000000'; ctx.fillRect(0, 0, size, size); }
 
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = qualitySelect.value === 'high' ? 'high' : 'medium';
   ctx.drawImage(img, 0, 0, size, size);
+  ctx.restore();
   return canvas;
+}
+
+function roundedRectPath(ctx, x, y, width, height, radius) {
+  const r = Math.min(radius, width / 2, height / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + width - r, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + r);
+  ctx.lineTo(x + width, y + height - r);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+  ctx.lineTo(x + r, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
 }
 
 // ICO encoder (single image)
